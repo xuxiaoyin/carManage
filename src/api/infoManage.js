@@ -153,10 +153,91 @@ export function delLongRent(data) {
   })
 }
 
+// 查询外租车辆列表 message/car/queryOutRentList
+export function queryOutRentList(data) {
+  return request({
+    url: '/message/car/queryOutRentList',
+    method: 'POST',
+    data
+  })
+}
+
+// 新增外租车 message/car/addOutRent
+export function addOutRent(data) {
+  return request({
+    url: '/message/car/addOutRent',
+    method: 'POST',
+    data
+  })
+}
+
+// 编辑外租车辆 message/car/updateOutRent
+export function updateOutRent(data) {
+  return request({
+    url: '/message/car/updateOutRent',
+    method: 'POST',
+    data
+  })
+}
+
+// 查询外租车详情 message/car/queryOutRent
+export function queryOutRent(data) {
+  return request({
+    url: '/message/car/queryOutRent',
+    method: 'POST',
+    data
+  })
+}
+
+// 删除外租车 message/car/delOutRent
+export function delOutRent(data) {
+  return request({
+    url: '/message/car/delOutRent',
+    method: 'POST',
+    data
+  })
+}
+
 // 查询车队列表 /message/fleet/queryList
 export function queryFleetList(data) {
   return request({
     url: '/message/fleet/queryList',
+    method: 'POST',
+    data
+  })
+}
+
+// 添加车队 message/fleet/add
+export function addFleetList(data) {
+  return request({
+    url: '/message/fleet/add',
+    method: 'POST',
+    data
+  })
+}
+
+// 查询车队详情 message/fleet/queryDetail
+export function fleetQueryDetail(data) {
+  return request({
+    url: '/message/fleet/queryDetail',
+    method: 'POST',
+    data
+  })
+}
+
+// 更新车队  message/fleet/update
+export function fleetUpdate(data) {
+  return request({
+    url: '/message/fleet/update',
+    method: 'POST',
+    data
+  })
+}
+
+// 删除车队 message/fleet/delete
+export function fleetDelete(data) {
+  return request({
+    url: '/message/fleet/delete',
     method: 'POST',
     data
   })

@@ -1,11 +1,25 @@
 <template>
   <div class="app-container">
     <div class="topSearch">
-      <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('添加挂靠车辆')">新增</el-button>
+      <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('添加外租车辆')">新增</el-button>
       <div class="searchBox">
-        <el-input v-model="searchText" placeholder="请输入内容" size="mini">
-          <el-button slot="append" icon="el-icon-search" type="primarry" size="mini" />
-        </el-input>
+        <el-form inline :model="form">
+          <el-form-item label="品牌" prop="brandName">
+            <el-input v-model="form.brandName" size="mini" placeholder="请输入品牌名称" />
+          </el-form-item>
+          <el-form-item label="车牌号" prop="carLicense">
+            <el-input v-model="form.carLicense" size="mini" placeholder="请输入车牌号" />
+          </el-form-item>
+          <el-form-item label="车主" prop="ownerName">
+            <el-input v-model="form.ownerName" size="mini" placeholder="请输车主姓名" />
+          </el-form-item>
+          <el-form-item label="车系" prop="seriesName">
+            <el-input v-model="form.seriesName" size="mini" placeholder="请输入车系名称" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" size="mini" :loading="listLoading" @click="fetchData">查询</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
 
@@ -18,13 +32,13 @@
         style="width: 100%"
         highlight-current-row
       >
-        <el-table-column label="车牌号" prop="name1" show-overflow-tooltip />
-        <el-table-column label="品牌" prop="name2" show-overflow-tooltip />
-        <el-table-column label="挂靠人" prop="name3" show-overflow-tooltip />
-        <el-table-column label="联系方式" prop="name4" show-overflow-tooltip />
-        <el-table-column label="开始时间" prop="name5" show-overflow-tooltip />
-        <el-table-column label="结束时间" prop="name6" show-overflow-tooltip />
-        <el-table-column label="挂靠费用" prop="name7" show-overflow-tooltip />
+        <el-table-column label="车牌号" prop="carLicense" show-overflow-tooltip />
+        <el-table-column label="车型" prop="brandYear" show-overflow-tooltip />
+        <el-table-column label="车主" prop="ownerName" show-overflow-tooltip />
+        <el-table-column label="车主联系方式" prop="ownerTel" show-overflow-tooltip />
+        <el-table-column label="开始时间" prop="startDate" show-overflow-tooltip />
+        <el-table-column label="结束时间" prop="endDate" show-overflow-tooltip />
+        <el-table-column label="费用" prop="rentFee" show-overflow-tooltip />
         <el-table-column label="相关协议" width="80" align="center">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="gotoEdite('编辑长租车辆信息',scope.row)">下载</el-button>
@@ -32,7 +46,7 @@
         </el-table-column>
         <el-table-column label="操作" width="100" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="gotoEdite('编辑挂靠车辆信息',scope.row)"><i class="el-icon-edit" /></el-button>
+            <el-button type="text" size="small" @click="gotoEdite('编辑外租车辆信息',scope.row)"><i class="el-icon-edit" /></el-button>
             <el-button type="text" size="small" @click="delectRow(scope.$index, list)"><i class="el-icon-delete" /></el-button>
           </template>
         </el-table-column>
@@ -54,24 +68,25 @@
 </template>
 
 <script>
-import { queryClientList } from '@/api/infoManage'
+import { queryOutRentList, delOutRent } from '@/api/infoManage'
 export default {
   data() {
     return {
-      searchText: '',
-      list: [
-        { name1: '粤A100AS', name2: '宝马X5', name3: '王三', name4: '15458775546', name5: '20100101', name6: '20100801', name7: '10000元/月' }
-      ],
+      list: [],
       listLoading: false,
       form: {
-        pageNum: 1,
-        pageSize: 0
+        'brandName': '',
+        'carLicense': '',
+        'ownerName': '',
+        'seriesName': '',
+        'pageNum': 1,
+        'pageSize': 10
       },
       total: 10
     }
   },
   created() {
-    // this.fetchData()
+    this.fetchData()
   },
   methods: {
     // 跳转新增, 编辑,详情
@@ -92,10 +107,12 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        rows.splice(index, 1)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+        delOutRent({ rentId: rows[index].rentId }).then(res => {
+          rows.splice(index, 1)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
         })
       }).catch(() => {
         this.$message({
@@ -106,9 +123,10 @@ export default {
     },
     fetchData() {
       this.listLoading = true
-      queryClientList().then(response => {
-        console.log(response)
-        // this.list = response.data.items
+      queryOutRentList(this.form).then(res => {
+        this.list = res.body
+        this.listLoading = false
+      }).catch(() => {
         this.listLoading = false
       })
     }
@@ -116,9 +134,18 @@ export default {
 }
 </script>
 
+<style lang="scss">
+  .topSearch {
+    .el-form-item {
+      margin-bottom: 0;
+    }
+  }
+</style>
+
 <style lang="scss" scoped>
   .topSearch {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
   }

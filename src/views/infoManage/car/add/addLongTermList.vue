@@ -152,8 +152,6 @@ export default {
         this.form = res.body
       })
     },
-    // 点击修改
-    sureEdite() {},
     // 点击添加
     sureAdd() {
       this.btnLoading = true
