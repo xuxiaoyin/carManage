@@ -62,11 +62,23 @@ div:focus {
 
 // main-container global css
 .app-container {
-  padding: 20px;
+  padding: 20px 15px;
   height: 100%;
 }
 
 .tablePage {
   margin-top: 10px;
   text-align: right;
+}
+
+.topSearch {
+  .searchBox {
+    .inp {
+      width: 150px;
+    }
+  }
+}
+.tableWrap {
+  margin-top: 10px;
+  height: calc(100% - 120px);
 }

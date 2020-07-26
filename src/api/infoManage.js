@@ -18,6 +18,33 @@ export function addClientInfo(data) {
   })
 }
 
+// 查询客户详情 /message/client/queryClientInfo
+export function queryClientInfo(data) {
+  return request({
+    url: '/message/client/queryClientInfo',
+    method: 'POST',
+    data
+  })
+}
+
+// 编辑客户信息 /message/client/updateClientInfo
+export function updateClientInfo(data) {
+  return request({
+    url: '/message/client/updateClientInfo',
+    method: 'POST',
+    data
+  })
+}
+
+// 删除客户 /message/client/deleteClientInfo
+export function deleteClientInfo(data) {
+  return request({
+    url: '/message/client/deleteClientInfo',
+    method: 'POST',
+    data
+  })
+}
+
 // 查询用户列表
 export function queryUserList(data) {
   return request({
@@ -45,10 +72,10 @@ export function updateUserInfo(data) {
   })
 }
 
-// /message/role/addRole POST 新增角色
-export function addRole(data) {
+// 查询用户详细信息 /message/user/queryUserInfo
+export function queryUserInfo(data) {
   return request({
-    url: '/message/role/addRole',
+    url: '/message/user/queryUserInfo',
     method: 'POST',
     data
   })
@@ -238,6 +265,69 @@ export function fleetUpdate(data) {
 export function fleetDelete(data) {
   return request({
     url: '/message/fleet/delete',
+    method: 'POST',
+    data
+  })
+}
+
+// 查询角色列表 /message/auth/queryRoleList
+export function queryRoleList(data) {
+  return request({
+    url: '/message/auth/queryRoleList',
+    method: 'POST',
+    data
+  })
+}
+
+// 查询角色信息详情 /message/auth/queryRoleInfo
+export function queryRoleInfo(data) {
+  return request({
+    url: '/message/auth/queryRoleInfo',
+    method: 'POST',
+    data
+  })
+}
+
+// 新增角色信息 /message/auth/addRoleInfo
+export function addRoleInfo(data) {
+  return request({
+    url: '/message/auth/addRoleInfo',
+    method: 'POST',
+    data
+  })
+}
+
+// 查询菜单列表 /message/auth/queryMenuTree
+export function queryMenuTree(data) {
+  return request({
+    url: '/message/auth/queryMenuTree',
+    method: 'POST',
+    data
+  })
+}
+
+// 修改角色信息 /message/auth/updateRoleInfo
+export function updateRoleInfo(data) {
+  return request({
+    url: '/message/auth/updateRoleInfo',
+    method: 'POST',
+    data
+  })
+}
+
+// 删除角色信息 /message/auth/deleteRoleInfo
+export function deleteRoleInfo(data) {
+  return request({
+    url: '/message/auth/deleteRoleInfo',
+    method: 'POST',
+    data
+  })
+}
+
+// 查询客户权限 /message/auth/queryUserAuthList
+export function queryUserAuthList(data) {
+  return request({
+    url: '/message/auth/queryUserAuthList',
     method: 'POST',
     data
   })

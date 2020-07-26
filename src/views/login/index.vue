@@ -6,18 +6,34 @@
         <h3 class="title">Login Form</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="phoneNumber">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          v-model="loginForm.phoneNumber"
+          placeholder="phoneNumber"
+          name="phoneNumber"
           type="text"
           tabindex="1"
           auto-complete="on"
+        />
+      </el-form-item>
+
+      <el-form-item class="codeWrap">
+        <el-input
+          ref="captcha"
+          v-model="loginForm.captcha"
+          placeholder="请输入验证码"
+          name="captcha"
+          type="text"
+          tabindex="2"
+        />
+        <el-image
+          class="code"
+          :src="url"
+          @click="getCode"
         />
       </el-form-item>
 
@@ -32,7 +48,7 @@
           :type="passwordType"
           placeholder="Password"
           name="password"
-          tabindex="2"
+          tabindex="3"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
         />
@@ -44,7 +60,7 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
+        <span style="margin-right:20px;">phoneNumber: 数字</span>
         <span> password: any</span>
       </div>
 
@@ -54,6 +70,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import { captcha } from '@/api/user'
 
 export default {
   name: 'Login',
@@ -74,16 +91,20 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        phoneNumber: '18011111111',
+        password: 'test',
+        captchaId: '',
+        captcha: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        phoneNumber: [{ required: true, trigger: 'blur', message: '请输入手机号' }],
+        captcha: [{ required: true, trigger: 'blur', message: '请输入验证码' }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      url: ''
     }
   },
   watch: {
@@ -94,7 +115,17 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    this.getCode()
+  },
   methods: {
+    getCode() {
+      captcha({}).then(res => {
+        this.loginForm.captchaId = res.body.captchaId
+        this.url = res.body.captcha
+        console.log(res)
+      })
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -109,13 +140,13 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$router.push({ path: this.redirect || '/' })
-          // this.$store.dispatch('user/login', this.loginForm).then(() => {
-          //   this.$router.push({ path: this.redirect || '/' })
-          //   this.loading = false
-          // }).catch(() => {
-          //   this.loading = false
-          // })
+          // this.$router.push({ path: this.redirect || '/' })
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.$router.push({ path: this.redirect || '/' })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -191,6 +222,16 @@ $light_gray:#eee;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+  }
+
+  .codeWrap {
+    position: relative;
+    .code {
+      position: absolute;
+      height: 48px;
+      top: 0;
+      right: 0
+    }
   }
 
   .tips {

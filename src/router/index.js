@@ -115,29 +115,6 @@ export const constantRoutes = [
         ]
       },
       {
-        path: 'driver',
-        name: 'Driver',
-        redirect: '/infoManage/driver/list',
-        component: () => import('@/views/infoManage/driver/index'),
-        meta: { title: '司机管理', icon: 'tree' },
-        children: [
-          {
-            path: 'list',
-            hidden: true,
-            component: () => import('@/views/infoManage/driver/list'),
-            name: 'driver-list',
-            meta: { title: '司机列表', activeMenu: '/infoManage/driver' }
-          },
-          {
-            path: 'driver-add',
-            hidden: true,
-            component: () => import('@/views/infoManage/driver/add/index'),
-            name: 'driver-add',
-            meta: { title: '新增司机', activeMenu: '/infoManage/driver' }
-          }
-        ]
-      },
-      {
         path: 'car',
         name: 'Car',
         redirect: '/infoManage/car/list',
@@ -205,6 +182,42 @@ export const constantRoutes = [
             component: () => import('@/views/infoManage/fleet/add/index'),
             name: 'fleet-add',
             meta: { title: '新增车队', activeMenu: '/infoManage/fleet' }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/orderManage',
+    component: Layout,
+    redirect: '/orderManage/list/listOrder',
+    name: 'orderManage',
+    meta: { title: '订单管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/orderManage/index'),
+        name: 'order-list',
+        children: [
+          {
+            path: 'listOrder',
+            component: () => import('@/views/orderManage/list'),
+            name: 'order-list1',
+            meta: { title: '订单列表' }
+          },
+          {
+            path: 'addList',
+            hidden: true,
+            component: () => import('@/views/orderManage/add/addList'),
+            name: 'order-add',
+            meta: { title: '新增订单', activeMenu: '/orderManage/list/listOrder' }
+          },
+          {
+            path: 'costReporting',
+            hidden: true,
+            component: () => import('@/views/orderManage/add/costReporting'),
+            name: 'cost-reporting',
+            meta: { title: '费用上报', activeMenu: '/orderManage/list/listOrder' }
           }
         ]
       }

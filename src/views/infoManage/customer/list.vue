@@ -1,11 +1,22 @@
 <template>
   <div class="app-container">
     <div class="topSearch">
-      <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('新增客户')">新增</el-button>
       <div class="searchBox">
-        <el-input v-model="searchText" placeholder="请输入内容" size="mini">
-          <el-button slot="append" icon="el-icon-search" type="primarry" size="mini" />
-        </el-input>
+        <el-form inline :model="form">
+          <el-form-item label="租车公司标识" prop="rentalWayId">
+            <el-input v-model="form.rentalWayId" size="mini" placeholder="请输入租车公司标识" />
+          </el-form-item>
+          <el-form-item label="客户标识" prop="clientWayId">
+            <el-input v-model="form.clientWayId" size="mini" placeholder="客户标识" />
+          </el-form-item>
+          <el-form-item label="客户名称" prop="clientWayName">
+            <el-input v-model="form.clientWayName" size="mini" placeholder="客户标识" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" size="mini" :loading="listLoading" @click="fetchData">查询</el-button>
+            <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('新增客户')">新增</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
 
@@ -50,7 +61,7 @@
 </template>
 
 <script>
-import { queryClientList } from '@/api/infoManage'
+import { queryClientList, deleteClientInfo } from '@/api/infoManage'
 export default {
   data() {
     return {
@@ -60,6 +71,7 @@ export default {
       form: {
         pageNum: 1,
         pageSize: 10,
+        rentalWayId: '',
         clientWayId: '',
         clientWayName: ''
       },
@@ -88,10 +100,12 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        rows.splice(index, 1)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+        deleteClientInfo({ clientWayId: rows[index].clientWayId }).then(res => {
+          rows.splice(index, 1)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
         })
       }).catch(() => {
         this.$message({
@@ -113,15 +127,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .topSearch {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .tableWrap {
-    margin-top: 10px;
-    height: calc(100% - 80px);
-  }
-</style>

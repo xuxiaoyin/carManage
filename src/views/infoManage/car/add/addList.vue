@@ -114,7 +114,7 @@
       <h1 class="topTitle">其他信息</h1>
 
       <el-row :gutter="20">
-        <el-col :span="8">
+        <el-col v-if="form.carDriverRel" :span="8">
           <el-form-item label="司机姓名" prop="driverId">
             <el-select v-model="form.carDriverRel.driverId" class="inp" filterable placeholder="请输入关键字查询">
               <el-option
@@ -126,12 +126,12 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col v-if="form.carDriverRel" :span="8">
           <el-form-item label="联系方式" prop="phoneNumber">
             <el-input v-model="form.carDriverRel.phoneNumber" class="inp" />
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col v-if="form.carServiceRecord" :span="8">
           <el-form-item label="上次保养时间" prop="preCareTime">
             <el-date-picker
               v-model="form.carServiceRecord.preCareTime"
@@ -142,7 +142,7 @@
             />
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col v-if="form.carServiceRecord" :span="8">
           <el-form-item label="保险到期时间" prop="safeEndTime">
             <el-date-picker
               v-model="form.carServiceRecord.safeEndTime"
@@ -153,7 +153,7 @@
             />
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col v-if="form.carServiceRecord" :span="8">
           <el-form-item label="下次年审时间" prop="nextReviewTime">
             <el-date-picker
               v-model="form.carServiceRecord.nextReviewTime"
@@ -164,7 +164,7 @@
             />
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col v-if="form.carServiceRecord" :span="8">
           <el-form-item label="公里数" prop="kilometers">
             <el-input v-model="form.carServiceRecord.kilometers" class="inp" />
           </el-form-item>

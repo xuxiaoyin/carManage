@@ -1,11 +1,22 @@
 <template>
   <div class="app-container">
     <div class="topSearch">
-      <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('新增员工')">新增</el-button>
       <div class="searchBox">
-        <el-input v-model="searchText" placeholder="请输入内容" size="mini">
-          <el-button slot="append" icon="el-icon-search" type="primarry" size="mini" />
-        </el-input>
+        <el-form inline :model="form">
+          <el-form-item label="用户名称" prop="userName">
+            <el-input v-model="form.userName" size="mini" placeholder="请输入用户名称" />
+          </el-form-item>
+          <el-form-item label="电话号码" prop="phoneNumber">
+            <el-input v-model="form.phoneNumber" size="mini" placeholder="请输入电话号码" />
+          </el-form-item>
+          <el-form-item label="请输入职位" prop="office">
+            <el-input v-model="form.office" size="mini" placeholder="客户标识" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" size="mini" :loading="listLoading" @click="fetchData">查询</el-button>
+            <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('新增员工')">新增</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
 
@@ -56,8 +67,12 @@ export default {
       list: [],
       listLoading: false,
       form: {
-        pageNum: 1,
-        pageSize: 10
+        'pageNum': '1',
+        'pageSize': '10',
+        'orderBy': '',
+        'userName': '',
+        'phoneNumber': '',
+        'office': ''
       },
       total: 10
     }
@@ -112,15 +127,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .topSearch {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .tableWrap {
-    margin-top: 10px;
-    height: calc(100% - 80px);
-  }
-</style>

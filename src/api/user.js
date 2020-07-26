@@ -1,9 +1,27 @@
 import request from '@/utils/request'
 
+// 登录
 export function login(data) {
   return request({
-    url: '/vue-admin-template/user/login',
+    url: '/message/auth/login',
     method: 'post',
+    data
+  })
+}
+
+// 获取验证码 /message/auth/captcha
+export function captcha(data) {
+  return request({
+    url: '/message/auth/captcha',
+    method: 'post',
+    data
+  })
+}
+
+export function queryUserAuthLis(data) {
+  return request({
+    url: '/message/auth/queryUserAuthLis',
+    method: 'POST',
     data
   })
 }

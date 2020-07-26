@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { addRole } from '@/api/infoManage'
+import { addRoleInfo } from '@/api/infoManage'
 export default {
   props: {
     title: String,
@@ -31,7 +31,8 @@ export default {
       isShow: false,
       form: {
         roleName: '',
-        remark: ''
+        remark: '',
+        authId: []
       },
       rules: {
         roleName: [
@@ -62,7 +63,7 @@ export default {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           if (this.title === '新增角色') {
-            addRole(this.form).then(res => {
+            addRoleInfo(this.form).then(res => {
               console.log(res)
             })
           }

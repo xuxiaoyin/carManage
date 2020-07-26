@@ -1,11 +1,10 @@
 <template>
   <div class="app-container">
     <div class="topSearch">
-      <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('新增车队')">新增</el-button>
       <div class="searchBox">
         <el-form inline :model="form">
           <el-form-item label="车队类型" prop="fleetType">
-            <el-select v-model="form.fleetType" class="inp" placeholder="请选择车队类型">
+            <el-select v-model="form.fleetType" class="inp" size="mini" placeholder="请选择车队类型">
               <el-option
                 v-for="item in fleetTypeList"
                 :key="item.value"
@@ -19,6 +18,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" size="mini" :loading="listLoading" @click="fetchData">查询</el-button>
+            <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('新增车队')">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -133,18 +133,5 @@ export default {
     .el-form-item {
       margin-bottom: 0;
     }
-  }
-</style>
-
-<style lang="scss" scoped>
-  .topSearch {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .tableWrap {
-    margin-top: 10px;
-    height: calc(100% - 80px);
   }
 </style>

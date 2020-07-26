@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <div class="topSearch">
-      <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('新增车辆')">新增</el-button>
       <div class="searchBox">
         <el-form inline :model="form">
           <el-form-item label="座位数" prop="seatId">
-            <el-input v-model="form.seatId" size="mini" placeholder="请输入座位数" />
+            <el-input v-model="form.seatId" size="mini" class="inp" placeholder="请输入座位数" />
           </el-form-item>
           <el-form-item label="品牌" prop="brandName">
-            <el-input v-model="form.brandName" size="mini" placeholder="请输入品牌名称" />
+            <el-input v-model="form.brandName" size="mini" class="inp" placeholder="请输入品牌名称" />
           </el-form-item>
           <el-form-item label="车系" prop="seriesName">
-            <el-input v-model="form.seriesName" size="mini" placeholder="请输入车系名称" />
+            <el-input v-model="form.seriesName" size="mini" class="inp" placeholder="请输入车系名称" />
           </el-form-item>
           <el-form-item label="车牌号" prop="carLicense">
-            <el-input v-model="form.carLicense" size="mini" placeholder="请输入车牌号" />
+            <el-input v-model="form.carLicense" size="mini" class="inp" placeholder="请输入车牌号" />
           </el-form-item>
           <el-form-item label="司机" prop="driver">
-            <el-input v-model="form.driver" size="mini" placeholder="请输司机姓名" />
+            <el-input v-model="form.driver" size="mini" class="inp" placeholder="请输司机姓名" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" size="mini" :loading="listLoading" @click="fetchData">查询</el-button>
+            <el-button type="success" size="mini" icon="el-icon-plus" @click="gotoEdite('新增车辆')">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -145,17 +145,4 @@ export default {
     margin-bottom: 0;
   }
 }
-</style>
-
-<style lang="scss" scoped>
-  .topSearch {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .tableWrap {
-    margin-top: 10px;
-    height: calc(100% - 80px);
-  }
 </style>

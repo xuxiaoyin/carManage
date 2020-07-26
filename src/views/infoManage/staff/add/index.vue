@@ -44,7 +44,9 @@
           <el-form-item label="入职时间" prop="onboardingDate">
             <el-date-picker
               v-model="form.onboardingDate"
-              type="date"
+              format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              type="datetime"
               placeholder="选择日期"
               class="inp"
             />
@@ -75,7 +77,7 @@
 </template>
 
 <script>
-import { addUserInfo, updateUserInfo } from '@/api/infoManage'
+import { addUserInfo, updateUserInfo, queryUserInfo } from '@/api/infoManage'
 export default {
   name: 'AddStaff',
   data() {
@@ -85,7 +87,7 @@ export default {
         cardId: '',
         phoneNumber: '',
         address: '',
-        // onboardingDate: '',
+        onboardingDate: '',
         office: '',
         roleId: [],
         password: ''
@@ -118,21 +120,35 @@ export default {
   },
   mounted() {
     if (this.$route.params.title && this.$route.params.title === '编辑员工信息') {
-      this.form = this.$route.params.currentRow
+      // this.form = this.$route.params.currentRow
+      this.getEditeInfo()
     }
   },
   methods: {
+    // 获取编辑信息
+    getEditeInfo() {
+      queryUserInfo({ userId: this.$route.params.currentRow.userId }).then(res => {
+        this.form = res.body
+      })
+    },
     // 点击修改
     sureEdite() {
       updateUserInfo(this.form).then(res => {
-        console.log(res)
+        this.$message({
+          message: '编辑成功',
+          type: 'success'
+        })
       })
     },
     // 点击添加
     sureAdd() {
       console.log(this.form)
       addUserInfo(this.form).then(res => {
-        console.log(res)
+        this.$message({
+          message: '添加成功',
+          type: 'success'
+        })
+        this.$router.push({ path: '/infoManage/staff/list' })
       })
     },
     // 点击取消

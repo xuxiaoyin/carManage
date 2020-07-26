@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { addClientInfo } from '@/api/infoManage'
+import { addClientInfo, queryClientInfo, updateClientInfo } from '@/api/infoManage'
 export default {
   data() {
     return {
@@ -106,16 +106,35 @@ export default {
   },
   mounted() {
     if (this.$route.params.title && this.$route.params.title === '编辑客户') {
-      this.ruleForm = this.$route.params.currentRow
+      // this.ruleForm = this.$route.params.currentRow
+      this.queryClientInfo()
     }
   },
   methods: {
-    // 点击修改
-    sureEdite() {},
+    // 获取编辑信息
+    queryClientInfo() {
+      queryClientInfo({ clientWayId: this.$route.params.currentRow.clientWayId }).then(res => {
+        console.log(res)
+        this.ruleForm = res.body
+      })
+    },
     // 点击添加
     sureAdd() {
       addClientInfo(this.ruleForm).then(res => {
-        console.log(res)
+        this.$message({
+          message: '添加成功',
+          type: 'success'
+        })
+        this.$router.push({ path: '/infoManage/customer/list' })
+      })
+    },
+    // 点击修改
+    sureEdite() {
+      updateClientInfo(this.ruleForm).then(res => {
+        this.$message({
+          message: '编辑成功',
+          type: 'success'
+        })
       })
     },
     // 点击取消
